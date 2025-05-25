@@ -228,10 +228,10 @@ with open(f"out/all_unmatched.csv", "w") as csvfile_full:
             
         file = ROOT.TFile(f"out/{f}_unmatched.root", "RECREATE")
         
-        # Create tree
+        # make new tree
         tree = ROOT.TTree("unmatched", "tree storing file_idx, event_idx, eta, phi, pt, vx, vy, vz, sum_e, sum_e_minus_pt, Q2, x, y")
 
-        # Create arrays (1-element) to be used as branches
+        # single-element arrays, will store info for branch
         file_idx = array.array('f', [0.])
         event_idx = array.array('f', [0.])
         particle_idx = array.array('f', [0.])
@@ -247,7 +247,7 @@ with open(f"out/all_unmatched.csv", "w") as csvfile_full:
         DIS_X = array.array('f', [0.])
         DIS_Y = array.array('f', [0.])
 
-        # Create branches
+        # new branches
         tree.Branch("file_idx", file_idx, "file_idx/F")
         tree.Branch("event_idx", event_idx, "event_idx/F")
         tree.Branch("particle_idx", particle_idx, "particle_idx/F")
@@ -263,7 +263,7 @@ with open(f"out/all_unmatched.csv", "w") as csvfile_full:
         tree.Branch("x",  DIS_X,  "x/F")
         tree.Branch("y",  DIS_Y,  "y/F")
 
-        # Loop over data and fill tree
+        # fill tree by looping over all entries
         count = 0
         for entry in this_file_unmatched:
             file_idx[0], event_idx[0], particle_idx[0], eta[0], phi[0], pt[0], vx[0], vy[0], vz[0], DIS_Q2[0], DIS_X[0], DIS_Y[0] = entry
@@ -280,7 +280,6 @@ with open(f"out/all_unmatched.csv", "w") as csvfile_full:
 
             count += 1
 
-        # Write and close
         tree.Write()
         file.Close()
     
