@@ -180,9 +180,9 @@ print("===========\nMATCHING RESULTS\n===========")
 ###################
 
 with open(f"out/all_unmatched.csv", "w") as csvfile_full:
-    csvfile_full.write("file_idx,event_idx,gen_particle_idx,eta,phi,pt,vx,vy,vz,sum_e,sum_e_minus_pt,Q2,x,y\n")
+    csvfile_full.write("file_idx,event_idx,gen_particle_idx,eta,phi,pt,vx,vy,vz,sum_e,sum_e_minus_pz,Q2,x,y\n")
     file_all = ROOT.TFile(f"out/all_unmatched.root", "RECREATE")
-    tree_all = ROOT.TTree("unmatched", "tree storing file_idx, event_idx, eta, phi, pt, vx, vy, vz, sum_e, sum_e_minus_pt, Q2, x, y")
+    tree_all = ROOT.TTree("unmatched", "tree storing file_idx, event_idx, eta, phi, pt, vx, vy, vz, sum_e, sum_e_minus_pz, Q2, x, y")
 
     f_idx_full = array.array('f', [0.])
     e_idx_full = array.array('f', [0.])
@@ -209,7 +209,7 @@ with open(f"out/all_unmatched.csv", "w") as csvfile_full:
     tree_all.Branch("vy",  y_full,  "vy/F")
     tree_all.Branch("vz",  z_full,  "vz/F")
     tree_all.Branch("sum_e",  had_sum_e_full,  "sum_e/F")
-    tree_all.Branch("sum_e_minus_pt",  had_sum_e_minus_pz_full,  "sum_e_minus_pt/F")
+    tree_all.Branch("sum_e_minus_pz",  had_sum_e_minus_pz_full,  "sum_e_minus_pz/F")
     tree_all.Branch("Q2",  DIS_Q2_full,  "Q2/F")
     tree_all.Branch("x",  DIS_X_full,  "x/F")
     tree_all.Branch("y",  DIS_Y_full,  "y/F")
@@ -220,7 +220,7 @@ with open(f"out/all_unmatched.csv", "w") as csvfile_full:
         print(f"Processing file: out/{f}_unmatched.root with {len(this_file_unmatched)} entries")
 
         with open(f"out/{f}_unmatched.csv", "w") as csvfile:
-            csvfile.write("file_idx,event_idx,gen_particle_idx,eta,phi,pt,vx,vy,vz,sum_e,sum_e_minus_pt,Q2,x,y\n")
+            csvfile.write("file_idx,event_idx,gen_particle_idx,eta,phi,pt,vx,vy,vz,sum_e,sum_e_minus_pz,Q2,x,y\n")
             for p in range(len(this_file_unmatched)):
                 g = this_file_unmatched[p]
                 csvfile.write(f"{i},{g[1]},{g[2]},{round(g[3], h)},{round(g[4], h)},{round(g[5], h)},{round(g[6], h)},{round(g[7], h)},{round(g[8], h)},{round(hadron_sum_e_info[i][p], h)},{round(hadron_sum_e_minus_pz_info[i][p], h)},{round(g[9], h)},{round(g[10], h)},{round(g[11], h)}\n")
@@ -229,7 +229,7 @@ with open(f"out/all_unmatched.csv", "w") as csvfile_full:
         file = ROOT.TFile(f"out/{f}_unmatched.root", "RECREATE")
         
         # make new tree
-        tree = ROOT.TTree("unmatched", "tree storing file_idx, event_idx, eta, phi, pt, vx, vy, vz, sum_e, sum_e_minus_pt, Q2, x, y")
+        tree = ROOT.TTree("unmatched", "tree storing file_idx, event_idx, eta, phi, pt, vx, vy, vz, sum_e, sum_e_minus_pz, Q2, x, y")
 
         # single-element arrays, will store info for branch
         file_idx = array.array('f', [0.])
@@ -258,7 +258,7 @@ with open(f"out/all_unmatched.csv", "w") as csvfile_full:
         tree.Branch("vy",  vy,  "vy/F")
         tree.Branch("vz",  vz,  "vz/F")
         tree.Branch("sum_e",  had_sum_e,  "sum_e/F")
-        tree.Branch("sum_e_minus_pt",  had_sum_e_minus_pz,  "sum_e_minus_pt/F")
+        tree.Branch("sum_e_minus_pz",  had_sum_e_minus_pz,  "sum_e_minus_pz/F")
         tree.Branch("Q2",  DIS_Q2,  "Q2/F")
         tree.Branch("x",  DIS_X,  "x/F")
         tree.Branch("y",  DIS_Y,  "y/F")
